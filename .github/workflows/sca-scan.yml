@@ -9,11 +9,15 @@ on:
 jobs:
   Anchore-SCA-Scan:
     runs-on: ubuntu-latest
+    
+    # FIX 1: Add this permissions block
+    permissions:
+      security-events: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # This action scans the project for dependencies and vulnerabilities
       - name: Anchore SCA Scan
         uses: anchore/scan-action@v3
         with:
@@ -21,7 +25,8 @@ jobs:
           fail-build: false
           output-format: 'sarif'
           
+      # FIX 2: Update to the latest version (v3)
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: results.sarif
