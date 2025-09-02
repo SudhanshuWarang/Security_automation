@@ -17,7 +17,7 @@ jobs:
 
       # Step 1: Run the OWASP Dependency-Check scanner
       - name: OWASP Dependency-Check
-        uses: dependency-check/scan-action@v5
+        uses: dependency-check/scan-action@v4
         with:
           # Scan the entire repository
           scan: '.'
