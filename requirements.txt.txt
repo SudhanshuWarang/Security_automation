@@ -1,1 +1,2 @@
-flask
+Flask
+PyYAML==5.1

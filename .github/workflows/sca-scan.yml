@@ -1,0 +1,33 @@
+# Name of your GitHub Action workflow
+name: SCA Security Scan
+
+# Trigger the workflow on every push or pull request to the main branch
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  Dependency-Check-sca-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 1: Run the OWASP Dependency-Check scanner
+      - name: OWASP Dependency-Check
+        uses: dependency-check/scan-action@v5
+        with:
+          # Scan the entire repository
+          scan: '.'
+          # Create the report in SARIF format for GitHub
+          format: 'SARIF'
+          # Fail the build if a high-severity vulnerability is found
+          fail: true 
+          
+      # Step 2: Upload the results to GitHub's Security tab
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: reports/dependency-check-report.sarif
