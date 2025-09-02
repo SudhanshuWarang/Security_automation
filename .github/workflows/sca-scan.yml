@@ -15,18 +15,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 1: Run the OWASP Dependency-Check scanner
+      # CORRECTED ACTION PATH ON THE NEXT LINE
       - name: OWASP Dependency-Check
-        uses: dependency-check/scan-action@v4
+        uses: OWASP/dependency-check-action@v4
         with:
-          # Scan the entire repository
           scan: '.'
-          # Create the report in SARIF format for GitHub
           format: 'SARIF'
-          # Fail the build if a high-severity vulnerability is found
           fail: true 
           
-      # Step 2: Upload the results to GitHub's Security tab
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         with:
