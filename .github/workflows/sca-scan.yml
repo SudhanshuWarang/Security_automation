@@ -1,7 +1,5 @@
-# Name of your GitHub Action workflow
 name: SCA Security Scan
 
-# Trigger the workflow on every push or pull request to the main branch
 on:
   push:
     branches: [ "main" ]
@@ -15,7 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # CORRECTED ACTION PATH ON THE NEXT LINE
       - name: OWASP Dependency-Check
         uses: OWASP/dependency-check-action@v4
         with:
