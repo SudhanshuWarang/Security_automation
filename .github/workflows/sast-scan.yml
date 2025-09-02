@@ -1,0 +1,35 @@
+# Name of your GitHub Action workflow
+name: SAST Security Scan
+
+# Trigger the workflow on every push or pull request to the main branch
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# Define the jobs to be run
+jobs:
+  CodeQL-sast-scan:
+    # Use the latest version of Ubuntu as the runner
+    runs-on: ubuntu-latest
+
+    # Grant permissions for the job to write to the repository
+    permissions:
+      security-events: write
+
+    # Define the steps of the job
+    steps:
+    # Step 1: Check out your code from the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Initialize the CodeQL scanner for Python
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: python
+
+    # Step 3: Run the actual analysis
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
