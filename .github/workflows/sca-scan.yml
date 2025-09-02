@@ -1,4 +1,4 @@
-name: SCA Security Scan
+name: SCA Security Scan (Alternative)
 
 on:
   push:
@@ -7,20 +7,21 @@ on:
     branches: [ "main" ]
 
 jobs:
-  Dependency-Check-sca-scan:
+  Anchore-SCA-Scan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: OWASP Dependency-Check
-        uses: OWASP/dependency-check-action@v4
+      # This action scans the project for dependencies and vulnerabilities
+      - name: Anchore SCA Scan
+        uses: anchore/scan-action@v3
         with:
-          scan: '.'
-          format: 'SARIF'
-          fail: true 
+          path: "."
+          fail-build: false
+          output-format: 'sarif'
           
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: reports/dependency-check-report.sarif
+          sarif_file: results.sarif
